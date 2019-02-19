@@ -9,10 +9,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  final routes = <String, WidgetBuilder>{
-    "LoginPage": (context) => LoginPage(),
-    "Homepage": (context) => Homepage(),
-  };
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,6 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
+        routes : <String, WidgetBuilder>{
+          "LoginPage": (context) => LoginPage(),
+          "Homepage": (context) => Homepage(),
+        },
       home: LoginPage(),
     );
   }

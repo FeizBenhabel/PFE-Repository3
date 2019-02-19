@@ -72,9 +72,10 @@ class _LoginPageState extends State<LoginPage> {
     //  accessToken: googleAuth.accessToken,
      // idToken: googleAuth.idToken,
                       );
-    final FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email_controller.text, password:password_controller.text);
-    print("signed in " + user.displayName);
-    return user;
+    final FirebaseUser user = await _auth.signInWithEmailAndPassword(email: email_controller.text, password:password_controller.text);
+    print("$user.displayName");
+   Navigator.pushNamed(context, 'Homepage');
+//   return user;
   }
   @override
   Widget build(BuildContext context) {
