@@ -10,13 +10,6 @@ class  Hompagepage_State extends State<Homepage> with SingleTickerProviderStateM
  Animation animation;
  AnimationController _controller;
  @override
- void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller= AnimationController(duration:Duration(milliseconds: 500),vsync:this);
-    animation=Tween(begin: 0.0,end: 500.0).animate(_controller);
-    _controller.forward();
-  }
  @override
 void dispose(){
    Navigator.of(context).pushNamed("LoginPage");

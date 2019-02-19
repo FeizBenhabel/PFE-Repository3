@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
@@ -15,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   var password_controller = TextEditingController();
   var email_controller = TextEditingController();
   var passwordFocusNode = new FocusNode();
+  //final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController _controller = new TextEditingController();
 
@@ -62,6 +64,17 @@ class _LoginPageState extends State<LoginPage> {
     RegExp regExp = new RegExp(p);
 
     return regExp.hasMatch(em);
+  }
+  Future<FirebaseUser> _SignIn() async {
+   // final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+//    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+   final AuthCredential credential = GoogleAuthProvider.getCredential(
+    //  accessToken: googleAuth.accessToken,
+     // idToken: googleAuth.idToken,
+                      );
+    final FirebaseUser user = await _auth.createUserWithEmailAndPassword(email: email_controller.text, password:password_controller.text);
+    print("signed in " + user.displayName);
+    return user;
   }
   @override
   Widget build(BuildContext context) {
@@ -152,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
     );
     /****************Login Button***********/
     var loginbutton = FloatingActionButton.extended(
-      onPressed: isDisabledButton ? null : disableButton,
+      onPressed: isDisabledButton ? null :_SignIn,
       tooltip: 'CONNEXION',
       icon: Icon(
         Icons.account_circle,
