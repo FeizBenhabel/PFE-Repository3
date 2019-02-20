@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'authentication.dart';
+import 'dart:async';
 class LoginPage extends StatefulWidget {
+LoginPage({this.auth,this.login});
+Authentication auth=new Authentication();
+VoidCallback login;
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -15,8 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   var password_controller = TextEditingController();
   var email_controller = TextEditingController();
   var passwordFocusNode = new FocusNode();
-  //final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController _controller = new TextEditingController();
 
@@ -39,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   void disableButton(){
     setState(() {
-    if(isEmail(email_controller.text)==true&&password_controller.text!=""){
+      if(isEmail(email_controller.text)==true&&password_controller.text!=""){
         isDisabledButton=false;
       }
       else
@@ -54,9 +56,16 @@ class _LoginPageState extends State<LoginPage> {
   Color loginTextColor(){
     if(isDisabledButton)
       return Colors.grey;
-          else
-            return Colors.white;
+    else
+      return Colors.white;
   }
+
+   Future <void> _SignIn()async{
+    String  userid= await  widget.auth.firstLogin(email_controller.text,password_controller.text);
+    widget.login();
+  }
+
+
   bool isEmail(String em) {
 
     String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -65,18 +74,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return regExp.hasMatch(em);
   }
-  Future<FirebaseUser> _SignIn() async {
-   // final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-//    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-   final AuthCredential credential = GoogleAuthProvider.getCredential(
-    //  accessToken: googleAuth.accessToken,
-     // idToken: googleAuth.idToken,
-                      );
-    final FirebaseUser user = await _auth.signInWithEmailAndPassword(email: email_controller.text, password:password_controller.text);
-    print("$user.displayName");
-   Navigator.pushNamed(context, 'Homepage');
-//   return user;
-  }
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -185,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 /*******************************************************/
 
-/***************Stack **************************************/
+    /***************Stack **************************************/
     var showhide = IconButton(
       // icon: Icons.visibility,
       highlightColor: Colors.transparent,
@@ -223,24 +221,24 @@ class _LoginPageState extends State<LoginPage> {
           child: password,
         ),
         Container(
-            // padding:EdgeInsets.only(right:0.0,),
+          // padding:EdgeInsets.only(right:0.0,),
 
             child: Positioned(
-          right: 20.0,
-          child: Visibility(
-              visible: iconisvisible,
-              child: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                icon: visibilityIcon,
-                onPressed: showHidePassword,
-              )),
-        ))
+              right: 20.0,
+              child: Visibility(
+                  visible: iconisvisible,
+                  child: IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    icon: visibilityIcon,
+                    onPressed: showHidePassword,
+                  )),
+            ))
       ],
     );
 
     return new Scaffold(
-     // backgroundColor: Colors.lightGreen.shade50,
+      // backgroundColor: Colors.lightGreen.shade50,
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[

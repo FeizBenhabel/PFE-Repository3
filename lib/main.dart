@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'loginpage.dart';
 import 'homepage.dart';
-
+import 'rootpage.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           "LoginPage": (context) => LoginPage(),
           "Homepage": (context) => Homepage(),
         },
-      home: LoginPage(),
+      home: RootPage(),
     );
   }
 }
