@@ -4,7 +4,8 @@ import 'dart:async';
 class LoginPage extends StatefulWidget {
 LoginPage({this.auth,this.login});
 Authentication auth=new Authentication();
-VoidCallback login;
+//VoidCallback login(String b ,String a);
+  VoidCallback login;
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -61,9 +62,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
    Future <void> _SignIn()async{
-    String  userid= await  widget.auth.firstLogin(email_controller.text,password_controller.text);
-    widget.login();
-  }
+    try {
+      String userid = await widget.auth.firstLogin(email_controller.text, password_controller.text);
+
+      widget.login();
+    }catch(e){
+
+    }
+    }
 
 
   bool isEmail(String em) {
