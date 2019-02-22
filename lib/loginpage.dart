@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'authentication.dart';
 import 'dart:async';
 class LoginPage extends StatefulWidget {
-LoginPage({this.auth,this.login});
+
 Authentication auth=new Authentication();
-//VoidCallback login(String b ,String a);
   VoidCallback login;
   _LoginPageState createState() => _LoginPageState();
 }
@@ -63,8 +62,7 @@ class _LoginPageState extends State<LoginPage> {
 
    Future <void> _SignIn()async{
     try {
-      String userid = await widget.auth.firstLogin(email_controller.text, password_controller.text);
-
+      String userid = await widget.auth.login(email_controller.text, password_controller.text);
       widget.login();
     }catch(e){
 
