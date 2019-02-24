@@ -3,7 +3,7 @@ import 'homepage.dart';
 import 'loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:connectivity/connectivity.dart';
-import 'noInternet.dart';
+import 'alerDialog.dart';
 
 class RootPage extends StatefulWidget {
   @override

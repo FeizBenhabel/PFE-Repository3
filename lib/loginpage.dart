@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'authentication.dart';
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
-import 'noInternet.dart';
+import 'alerDialog.dart';
 class LoginPage extends StatefulWidget {
 
 Authentication auth=new Authentication();
@@ -64,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 /***********Connexion**********************/
    Future <void> _SignIn()async{
-    print("$isConnected");
     if(isConnected==true)
      try {
      String userid = await widget.auth.login(email_controller.text, password_controller.text);
@@ -73,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 
      }
      else {
-          showDialog(context:context,child:NoInternet());
+          showDialog(context:this.context,child: new AlertMessage());
     }
     }
 /*****************************************/
@@ -215,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onPressed: () {
-
+              Navigator.pushNamed( context,"ResetPassword");
       },
       label: Text(
         "Mot de passe oublié?",

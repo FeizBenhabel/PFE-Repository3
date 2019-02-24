@@ -14,8 +14,8 @@ Future<void>logout() async{
     FirebaseAuth.instance.signOut();
 }
 
-Future<void>resetpassword()async{
-    //FirebaseUser user=await FirebaseAuth.instance.sendPasswordResetEmail(email:"",);
+Future<void>resetpassword(String email)async{
+   return await FirebaseAuth.instance.sendPasswordResetEmail(email:email,);
 }
 
 
