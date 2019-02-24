@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-class Loading extends StatefulWidget {
+class LoadingPage extends StatefulWidget {
   @override
-  _LoadingState createState() => _LoadingState();
+  _LoadingPageState createState() => _LoadingPageState();
 }
 
-class _LoadingState extends State<Loading> {
+class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-
+    return Scaffold(
+        body: Center(
       child: Container(
         child:RefreshProgressIndicator(
                   backgroundColor: Colors.lightGreen,
         ),
       ),
-
+        ),
     );
   }
 }

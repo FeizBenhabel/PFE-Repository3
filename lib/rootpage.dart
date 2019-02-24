@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'loginpage.dart';
+import 'loadingPage.dart';
 
 class RootPage extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _RootPageState extends State<RootPage> {
                return new Homepage();
              else
                switch(snapshot.connectionState){
-                 case ConnectionState.waiting:return new LoginPage();
+                 case ConnectionState.waiting:return LoadingPage();
                  break;
                  default:return new LoginPage();
                }
