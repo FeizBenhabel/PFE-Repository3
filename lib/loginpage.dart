@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'authentication.dart';
 import 'dart:async';
+import 'package:connectivity/connectivity.dart';
+import 'noInternet.dart';
 class LoginPage extends StatefulWidget {
 
 Authentication auth=new Authentication();
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   var password_controller = TextEditingController();
   var email_controller = TextEditingController();
   var passwordFocusNode = new FocusNode();
+  bool isConnected=false;
 
   final TextEditingController _controller = new TextEditingController();
 
@@ -59,16 +62,21 @@ class _LoginPageState extends State<LoginPage> {
     else
       return Colors.white;
   }
-
+/***********Connexion**********************/
    Future <void> _SignIn()async{
-    try {
-      String userid = await widget.auth.login(email_controller.text, password_controller.text);
-      widget.login();
-    }catch(e){
+    print("$isConnected");
+    if(isConnected==true)
+     try {
+     String userid = await widget.auth.login(email_controller.text, password_controller.text);
+     widget.login();
+     }catch(e){
 
+     }
+     else {
+          showDialog(context:context,child:NoInternet());
     }
     }
-
+/*****************************************/
 
   bool isEmail(String em) {
 
@@ -241,39 +249,51 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
 
-    return new Scaffold(
-      // backgroundColor: Colors.lightGreen.shade50,
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Visibility(
-            visible: isvisibleLogo,
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(top: 10.0),
-              child: Center(
-                child: logo,
-              ),
+    return StreamBuilder(
+        stream: Connectivity().onConnectivityChanged,
+        builder: (BuildContext context, _connectivityResult) {
+                if(_connectivityResult.data==ConnectivityResult.none){
+                  isConnected=false;
+                }else
+                  isConnected=true;
+
+          return new Scaffold(
+            // backgroundColor: Colors.lightGreen.shade50,
+            body: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Visibility(
+                  visible: isvisibleLogo,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(top: 10.0),
+                    child: Center(
+                      child: logo,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 60, right: 20.0),
+                  child: email,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0, right: 0.0),
+                  child: stack,
+                ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: forgetPasswordButton,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 60.0, left: 40.0, right: 40.0),
+                  child: loginbutton,
+                ),
+              ],
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 60, right: 20.0),
-            child: email,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 16.0, right: 0.0),
-            child: stack,
-          ),
-          // ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: forgetPasswordButton,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 60.0, left: 40.0, right: 40.0),
-            child: loginbutton,
-          ),
-        ],
-      ),
+          );
+
+        }
     );
+
   }
 }

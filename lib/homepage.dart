@@ -25,7 +25,6 @@ void click(){
           body:ListView(
             children: <Widget>[
               Text("Hello:"),
-            //  FirebaseAuth.instance.
               FlatButton(
                 textColor: Colors.red,
                 child: Text("click Me"),
