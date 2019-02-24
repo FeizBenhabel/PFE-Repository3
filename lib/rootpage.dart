@@ -24,7 +24,7 @@ class _RootPageState extends State<RootPage> {
                switch(snapshot.connectionState){
                  case ConnectionState.waiting:return LoadingPage();
                  break;
-                 default:return new LoginPage();
+                 default:return new LoadingPage();
                }
 
             }

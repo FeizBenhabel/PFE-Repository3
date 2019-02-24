@@ -10,8 +10,10 @@ class _LoadingPageState extends State<LoadingPage> {
     return Scaffold(
         body: Center(
       child: Container(
-        child:RefreshProgressIndicator(
+        padding:EdgeInsets.only(left: 10.0,right: 10.0),
+        child:LinearProgressIndicator(
                   backgroundColor: Colors.lightGreen,
+
         ),
       ),
         ),
