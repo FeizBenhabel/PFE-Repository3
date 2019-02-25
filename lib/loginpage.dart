@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'authentication.dart';
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
-import 'alerDialog.dart';
+import 'alertMessage.dart';
 class LoginPage extends StatefulWidget {
 
 Authentication auth=new Authentication();
-  VoidCallback login;
+  VoidCallback loggedIn;
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   var password_controller = TextEditingController();
   var email_controller = TextEditingController();
   var passwordFocusNode = new FocusNode();
-  bool isConnected=false;
+  bool hasInternet=false;
 
   final TextEditingController _controller = new TextEditingController();
 
@@ -64,12 +64,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 /***********Connexion**********************/
    Future <void> _SignIn()async{
-    if(isConnected==true)
+    if(hasInternet==true)
      try {
      String userid = await widget.auth.login(email_controller.text, password_controller.text);
-     widget.login();
+     widget.loggedIn();
      }catch(e){
-
+         var   alert =new AlertMessage();
+            alert.setTitle("Erreur");
+            alert.setMessage("Adresse e-mail/Mot de passe Invalid!");
+            showDialog(context: context,child: alert);
      }
      else {
           showDialog(context:this.context,child: new AlertMessage());
@@ -214,7 +217,11 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onPressed: () {
+        if(hasInternet==true)
               Navigator.pushNamed( context,"ResetPassword");
+         else{
+           showDialog(context: context,child: AlertMessage());
+        }
       },
       label: Text(
         "Mot de passe oublié?",
@@ -252,9 +259,9 @@ class _LoginPageState extends State<LoginPage> {
         stream: Connectivity().onConnectivityChanged,
         builder: (BuildContext context, _connectivityResult) {
                 if(_connectivityResult.data==ConnectivityResult.none){
-                  isConnected=false;
+                  hasInternet=false;
                 }else
-                  isConnected=true;
+                  hasInternet=true;
 
           return new Scaffold(
             // backgroundColor: Colors.lightGreen.shade50,

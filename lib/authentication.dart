@@ -4,8 +4,10 @@ import 'dart:async';
 class Authentication  {
 
 
-  Future<String> login (String email,String password) async{
+  Future<String> login(String email,String password) async{
+
      FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email:email, password:password);
+
      return user.uid;
 
   }
@@ -15,8 +17,11 @@ Future<void>logout() async{
 }
 
 Future<void>resetpassword(String email)async{
-   return await FirebaseAuth.instance.sendPasswordResetEmail(email:email,);
-}
+
+       await FirebaseAuth.instance.sendPasswordResetEmail(email: email,);
+
+
+    }
 
 
   }

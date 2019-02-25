@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         routes : <String, WidgetBuilder>{
           "LoginPage": (context) => LoginPage(),
           "Homepage": (context) => Homepage(),
+          "RootPage":(context)=>RootPage(),
           "ResetPassword":(context)=>ResetPassword(),
         },
       home: RootPage(),
