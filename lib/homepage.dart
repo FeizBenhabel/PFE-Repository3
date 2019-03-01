@@ -14,7 +14,7 @@ VoidCallback logout;
 void click(){
   setState(() {
     auth.logout();
-    logout();
+    //logout();
   });
 }
  @override

@@ -14,8 +14,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title:
-          'Flutter Code Sample for material.DeletableChipAttributes.onDeleted',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),

@@ -4,6 +4,7 @@ import 'alertMessage.dart';
 import 'verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'authentication.dart';
+import 'logo.dart';
 class ResetPassword extends StatefulWidget {
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
@@ -11,6 +12,7 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   bool exist=false;
+  Logo logo=new Logo();
   final email_controller = TextEditingController();
   var verfication=new Verfication();
   bool isdisabledButton=true;
@@ -18,13 +20,16 @@ class _ResetPasswordState extends State<ResetPassword> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    logo.setRaduis(75.0);
 
   }
   @override
   Widget build(BuildContext context) {
+
     void disablebutton(){
       setState(() {
-        isdisabledButton=verfication.isEmail(email_controller.text);
+        isdisabledButton=!verfication.isEmail(email_controller.text);
+        print(isdisabledButton);
       });
     }
     final email = TextField(
@@ -75,43 +80,39 @@ class _ResetPasswordState extends State<ResetPassword> {
       }
 
     }
-
-
     var resetbutton = FloatingActionButton.extended(
-      onPressed:!isdisabledButton?null:reset,
-      tooltip: 'Réinitialiser le mot de passe',
+      onPressed:isdisabledButton ? null:reset,
+      tooltip: 'Changer',
       icon: Icon(
-        Icons.account_circle,
+        Icons.done,
       ),
 
       label: Text(
-        "Réinitialiser le mot de passe",
+        "Changer",
         style: new TextStyle(
           fontWeight: FontWeight.bold,
-
+          color: isdisabledButton ? Colors.grey:Colors.white,
         ),
-        textDirection: TextDirection.ltr,
       ),
       backgroundColor: Colors.green.shade300,
     );
+
         return Scaffold(
                 body: Center(
                   child: ListView(
                     children: <Widget>[
-                      Logo(),
+                      logo,
                       SizedBox(height: 20.0, width: 20.0,),
                       Container(
                         padding: EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10.0),
+                            left: 10.0, right: 30.0, top: 10.0),
                         child: email,
                       ),
-                      SizedBox(height: 70.0, width: 70.0,),
+                      SizedBox(height: 80.0, width: 70.0,),
                       Container(
-                        padding: EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10.0),
-                        child: resetbutton,
+                        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+                        child:resetbutton,
                       ),
-
                     ],
 
 

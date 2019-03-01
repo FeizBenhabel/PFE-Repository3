@@ -3,9 +3,10 @@ import 'authentication.dart';
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'alertMessage.dart';
-class LoginPage extends StatefulWidget {
+import 'logo.dart';
 
-Authentication auth=new Authentication();
+class LoginPage extends StatefulWidget {
+  Authentication auth = new Authentication();
   VoidCallback loggedIn;
   _LoginPageState createState() => _LoginPageState();
 }
@@ -17,20 +18,20 @@ class _LoginPageState extends State<LoginPage> {
   bool ishidedPassword = true;
   bool isvisibleLogo = true;
   bool passwordTyped = false;
-  bool isDisabledButton=true;
+  bool isDisabledButton = true;
   var password_controller = TextEditingController();
   var email_controller = TextEditingController();
   var passwordFocusNode = new FocusNode();
-  bool hasInternet=false;
-
+  bool hasInternet = false;
+  Logo logo = new Logo();
   final TextEditingController _controller = new TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
   void showHidePassword() {
     setState(() {
       if (ishidedPassword == true && passwordTyped == true) {
@@ -42,47 +43,45 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
-  void disableButton(){
+
+  void disableButton() {
     setState(() {
-      if(isEmail(email_controller.text)==true&&password_controller.text!=""){
-        isDisabledButton=false;
+      if (isEmail(email_controller.text) == true &&
+          password_controller.text != "") {
+        isDisabledButton = false;
+      } else {
+        isDisabledButton = true;
       }
-      else
-      {
-        isDisabledButton=true;
-
-      }
-    }
-
-    );
+    });
   }
-  Color loginTextColor(){
-    if(isDisabledButton)
+
+  Color loginTextColor() {
+    if (isDisabledButton)
       return Colors.grey;
     else
       return Colors.white;
   }
+
 /***********Connexion**********************/
-   Future <void> _SignIn()async{
-    if(hasInternet==true)
-     try {
-     String userid = await widget.auth.login(email_controller.text, password_controller.text);
-     widget.loggedIn();
-     }catch(e){
-         var   alert =new AlertMessage();
-            alert.setTitle("Erreur");
-            alert.setMessage("Adresse e-mail/Mot de passe Invalid!");
-            showDialog(context: context,child: alert);
-     }
-     else {
-          showDialog(context:this.context,child: new AlertMessage());
+  Future<void> _SignIn() async {
+    if (hasInternet == true)
+      try {
+        var userid = await widget.auth.login(email_controller.text, password_controller.text);
+      } catch (e) {
+        var alert = new AlertMessage();
+        alert.setTitle("Erreur");
+        alert.setMessage("Adresse e-mail/Mot de passe Invalid!");
+        showDialog(context: this.context, child: alert);
+      }
+    else {
+      showDialog(context: this.context, child: new AlertMessage());
     }
-    }
+  }
 /*****************************************/
 
   bool isEmail(String em) {
-
-    String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(p);
 
@@ -91,14 +90,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final logo = Hero(
-      tag: 'hero',
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 75.0,
-        child: Image.asset('img/logo-agri.png'),
-      ),
-    );
     final email = TextField(
       autofocus: false,
       textInputAction: TextInputAction.next,
@@ -115,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
           disableButton();
         });
       },
-      onChanged: (text){
+      onChanged: (text) {
         setState(() {
           disableButton();
         });
@@ -144,7 +135,6 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           isvisibleLogo = false;
           disableButton();
-
         });
       },
       onChanged: (text) {
@@ -170,7 +160,6 @@ class _LoginPageState extends State<LoginPage> {
           }
         });
       },
-
       decoration: InputDecoration(
         icon: Icon(Icons.lock_outline),
         hintText: "Mot de passe ",
@@ -178,12 +167,11 @@ class _LoginPageState extends State<LoginPage> {
     );
     /****************Login Button***********/
     var loginbutton = FloatingActionButton.extended(
-      onPressed: isDisabledButton ? null :_SignIn,
+      onPressed: isDisabledButton ? null : _SignIn,
       tooltip: 'CONNEXION',
       icon: Icon(
         Icons.account_circle,
       ),
-
       label: Text(
         "CONNEXION",
         style: new TextStyle(
@@ -193,7 +181,6 @@ class _LoginPageState extends State<LoginPage> {
         textDirection: TextDirection.ltr,
       ),
       backgroundColor: Colors.green.shade300,
-
     );
 /*******************************************************/
 
@@ -217,10 +204,10 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onPressed: () {
-        if(hasInternet==true)
-              Navigator.pushNamed( context,"ResetPassword");
-         else{
-           showDialog(context: context,child: AlertMessage());
+        if (hasInternet == true)
+          Navigator.pushNamed(context, "ResetPassword");
+        else {
+          showDialog(context: context, child: AlertMessage());
         }
       },
       label: Text(
@@ -239,30 +226,29 @@ class _LoginPageState extends State<LoginPage> {
           child: password,
         ),
         Container(
-          // padding:EdgeInsets.only(right:0.0,),
-
+            // padding:EdgeInsets.only(right:0.0,),
             child: Positioned(
-              right: 20.0,
-              child: Visibility(
-                  visible: iconisvisible,
-                  child: IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    icon: visibilityIcon,
-                    onPressed: showHidePassword,
-                  )),
-            ))
+          right: 20.0,
+          child: Visibility(
+              visible: iconisvisible,
+              child: IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                icon: visibilityIcon,
+                onPressed: showHidePassword,
+              )),
+        ))
       ],
     );
 
     return StreamBuilder(
         stream: Connectivity().onConnectivityChanged,
         builder: (BuildContext context, _connectivityResult) {
-                if(_connectivityResult.data==ConnectivityResult.none){
-                  hasInternet=false;
-                }else
-                  hasInternet=true;
-
+          if (_connectivityResult.data == ConnectivityResult.none) {
+            hasInternet = false;
+          } else
+            hasInternet = true;
+            logo.setRaduis(75.0);
           return new Scaffold(
             // backgroundColor: Colors.lightGreen.shade50,
             body: ListView(
@@ -272,9 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                   visible: isvisibleLogo,
                   child: Padding(
                     padding: EdgeInsetsDirectional.only(top: 10.0),
-                    child: Center(
-                      child: logo,
-                    ),
+                    child: Center(child: logo),
                   ),
                 ),
                 Padding(
@@ -297,9 +281,6 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           );
-
-        }
-    );
-
+        });
   }
 }
