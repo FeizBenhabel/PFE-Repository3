@@ -25,13 +25,6 @@ class _LoginPageState extends State<LoginPage> {
   bool hasInternet = false;
   Logo logo = new Logo();
   final TextEditingController _controller = new TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   void showHidePassword() {
     setState(() {
       if (ishidedPassword == true && passwordTyped == true) {
@@ -65,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
 /***********Connexion**********************/
   Future<void> _SignIn() async {
     if (hasInternet == true)
+
       try {
         var userid = await widget.auth.login(email_controller.text, password_controller.text);
       } catch (e) {
@@ -73,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         alert.setMessage("Adresse e-mail/Mot de passe Invalid!");
         showDialog(context: this.context, child: alert);
       }
+
     else {
       showDialog(context: this.context, child: new AlertMessage());
     }

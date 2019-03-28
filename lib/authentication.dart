@@ -15,6 +15,10 @@ class Authentication  {
 Future<void>logout() async{
     FirebaseAuth.instance.signOut();
 }
+Future<FirebaseUser>getUser() async{
+  FirebaseUser user= await FirebaseAuth.instance.currentUser();
+  return user;
+}
 
 Future<void>resetpassword(String email)async{
 

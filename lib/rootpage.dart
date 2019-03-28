@@ -21,14 +21,14 @@ void loggedIn(){
           return StreamBuilder(
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (BuildContext context, snapshot) {
-
              if(snapshot.hasData)
                return new Homepage();
              else
                switch(snapshot.connectionState){
                  case ConnectionState.waiting:return LoadingPage();
                  break;
-                 default:return new LoginPage();
+                 default:
+                   return new LoginPage();
                }
 
             }
