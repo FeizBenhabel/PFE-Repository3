@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+import 'Dashboard.dart';
 import 'loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'loadingPage.dart';
@@ -22,7 +22,7 @@ void loggedIn(){
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (BuildContext context, snapshot) {
              if(snapshot.hasData)
-               return new Homepage();
+               return new Dashboard();
              else
                switch(snapshot.connectionState){
                  case ConnectionState.waiting:return LoadingPage();
