@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/animation.dart';
 class SensorCount extends StatefulWidget {
   final IconData iconData;
   const SensorCount(this.iconData);
@@ -7,14 +9,24 @@ class SensorCount extends StatefulWidget {
   _SensorCountState createState() => _SensorCountState();
 }
 
-class _SensorCountState extends State<SensorCount> {
+class _SensorCountState extends State<SensorCount> with SingleTickerProviderStateMixin  {
   String sennumber="";
   bool visible=false;
   int sensorsdowncount;
+  double opacity=1.0;
+  AnimationController animationController;
+  Animation animation;
+  Duration duration=Duration(seconds: 1);
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(() {
+        debugPrint(opacity.toString());
+        animationController = AnimationController(
+            duration: Duration(milliseconds: 2000), vsync: this);
+
+    });
 
   }
 
@@ -36,8 +48,11 @@ class _SensorCountState extends State<SensorCount> {
               }else{
                   visible=false;
               }
+           //   opacity=opacity==0.0?1.0:0.0;
+            //  duration=Duration(seconds: 1);
               return new Card(
-                elevation: 5.0,
+                  color: Color(0xff595377),
+                elevation: 0.1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(23.0),
                 ),
@@ -57,25 +72,43 @@ class _SensorCountState extends State<SensorCount> {
                             shrinkWrap: true,
                             children: <Widget>[
                               Center(
-                                child:Text("Nombre De Capteurs",style: TextStyle(fontSize:16.0,color: Colors.blue.shade300),),
+                                child:Icon(FontAwesomeIcons.cogs,color: Colors.white,size: 25.0,)
                               ),
                               SizedBox(
                                 height: 10.0,
                                 width: 10.0,
                               ),
                               Center(
-                                child: Text(sennumber,style: TextStyle(fontSize:30.0,),),
+                                child: Text(sennumber,style: TextStyle(fontSize:30.0,fontWeight:FontWeight.bold,color: Colors.white),),
                               ),
                               SizedBox(
-                                height: 7.0,
-                                width: 7.0,
+                                height: 5.0,
+                                width: 5.0,
                               ),
-                              Center(
-                                child:Visibility(
-                                  visible:visible,
-                                  child: Text(sensorsdowncount.toString()+" Capteur(s) en panne!",style: TextStyle(fontSize:14.0,color: Colors.redAccent),),
-                              )
-                              ),
+                                Center(
+                                    child:Visibility(
+                                      visible:visible,
+                                        child: Stack(
+                                        children: <Widget>[
+                                          AnimatedOpacity(
+                                            duration: duration,
+                                            opacity:opacity,
+                                              child:Padding(
+                                              padding: EdgeInsets.only(left:0),
+                                              child:Text(sensorsdowncount.toString(),style: TextStyle(fontSize:30.0,color:Colors.red,fontWeight: FontWeight.bold,),),
+                                              ),
+                                              ),
+                                          Padding(
+                                            padding: EdgeInsets.only(left:20,top:2.0),
+                                          child:Icon(Icons.perm_scan_wifi,size: 28.0,color: Colors.red,)
+                                          ),
+
+                                            ],
+                                      ),
+                                      ),
+                                    ),
+
+
                             ],
                           )
 
@@ -87,6 +120,7 @@ class _SensorCountState extends State<SensorCount> {
               );
 
             }
+
 
           );
 

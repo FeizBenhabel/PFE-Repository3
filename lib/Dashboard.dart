@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'logo.dart';
 import 'MenuShape.dart';
 import 'loginpage.dart';
-import 'my_flutter_app_icons.dart';
 import 'sensorcount.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'weather.dart';
@@ -55,25 +54,41 @@ List<Widget> _tiles =  <Widget>[
 ];
 @override
   Widget build(BuildContext context) {
-  return new Scaffold(
-    backgroundColor: Colors.grey.shade300,
+
+    return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Dashboard'),
+        backgroundColor:Color(0xff534268),
+          elevation: 0.0,
       ),
-    body:  new Padding(
-  padding: const EdgeInsets.only(top: 12.0),
-  child: new StaggeredGridView.count(
-  crossAxisCount: 4,
-  staggeredTiles: _staggeredTiles,
-  children:_tiles,
-  mainAxisSpacing: 7.0,
-  crossAxisSpacing: 7.0,
-  padding: const EdgeInsets.all(4.0),
+    body:new Container(
+    decoration: BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomLeft,
+    //  stops: [0.1, 0.5, 0.7, 0.9],
+
+      colors:[
+        Color(0xff534268),
+        Color(0xff504165),
+        Color(0xff504164),
+        Color(0xff504165),
+        Color(0xff343A64),
+      ],
+    ),
+  ),
+    child:new Container(
+      color: Colors.transparent,
+    padding: const EdgeInsets.only(top: 12.0),
+    child: new StaggeredGridView.count(
+
+    crossAxisCount: 4,
+    staggeredTiles: _staggeredTiles,
+    children:_tiles,
+    mainAxisSpacing: 7.0,
+    crossAxisSpacing: 7.0,
+    padding: const EdgeInsets.all(4.0),
   )
     ),
-    bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(left: 120.0,bottom: 49.0),
-          child: Text(" Ben Habel Feiz © 2019",style:TextStyle(color: Colors.blueGrey,fontStyle: FontStyle.italic,fontSize: 12),),
     ),
     );
 
@@ -88,8 +103,8 @@ class _Example01Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Card(
-      color: backgroundColor,
-      elevation: 5.0,
+      color: Color(0xff595377),
+      elevation: 0.1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(23.0),
       ),

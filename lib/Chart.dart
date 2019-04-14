@@ -22,7 +22,8 @@ class _ChartState extends State<Chart> {
 
   Widget build(BuildContext context) {
     return new Card(
-      elevation: 5.0,
+     color: Color(0xff595377),
+      elevation: 0.1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(23.0),
       ),
@@ -32,7 +33,7 @@ class _ChartState extends State<Chart> {
           height: 20.0,
         ),
         Center(
-          child:Text("Humidité Stats",style: TextStyle(fontSize:20.0,color: Colors.blue.shade300),),
+          child:Text("Humidité Stats",style: TextStyle(fontSize:20.0,color: Colors.white),),
         ),
          Padding(
            padding: EdgeInsets.only(top: 60.0,left: 20.0,right: 20.0),

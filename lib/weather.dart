@@ -17,7 +17,6 @@ class _WeatherPageState extends State<WeatherPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    getweath();
   }
   Future  getweath()async{
     var globalClient = IOClient();
@@ -29,46 +28,35 @@ class _WeatherPageState extends State<WeatherPage>{
     //print((await api.hourlyForecastsById("2172797")).simplified());
     weather=(await api.byName("Sfax").toString());
   }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
+      color: Color(0xff595377),
+      elevation: 0.1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(23.0),
       ),
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          new Center(
-          child:Text("Méteo",style:TextStyle(fontSize: 20.0,color:Colors.blue.shade300),),
-          ),
+
           SizedBox(
             height: 10.0,
           ),
           new Center(
-            child: Icon(FontAwesomeIcons.cloudSun,color: Colors.yellow,size: 40.0,),
+            child: Icon(FontAwesomeIcons.cloudSun,color: Colors.white,size: 40.0,),
           ),
-          new Stack(
-            //padding: EdgeInsets.only(right: 130.0,top: 10),
-           children: <Widget>[
-             Padding(
-               padding: EdgeInsets.only(left: 40.0,top: 17),
-               child:Icon(FontAwesomeIcons.temperatureLow,size: 17.0,color: Colors.blueGrey,),
-             ),
-              Padding(
-               padding: EdgeInsets.only(left: 15.0,top: 15.0),
-               child: Text("30",style: TextStyle(color: Colors.blueGrey,fontSize: 19.0,fontWeight:FontWeight.bold),),
-             ),
-             Padding(
-               padding: EdgeInsets.only(left: 130.0,top:13.5),
-               child: Icon(FontAwesomeIcons.wind,color: Colors.blueGrey,)
-             ),
-             Padding(
-               padding: EdgeInsets.only(left: 72.0,top: 17.0),
-               child: Text("10km/h",style: TextStyle(color: Colors.blueGrey,fontSize: 16.0,fontWeight:FontWeight.bold),),
-             ),
-           ],
+          SizedBox(
+            height: 15.0,
           ),
+              Center(
+               child: Text("30°",style: TextStyle(color: Colors.white,fontSize: 30.0,fontWeight:FontWeight.bold),),
+             ),
         ],
       ),
     );
