@@ -27,8 +27,10 @@ int sensercount=0;
               }
      Widget values(){
       for (int i=0;i<sensercount;i++){
-          return Container(
-            child: new Text(gettingLastValue(i)),
+           ListView(
+            children: <Widget>[
+              Text(gettingLastValue(i)),
+            ],
           );
       }
      }
@@ -47,7 +49,7 @@ int sensercount=0;
         child: ListView(
           children: <Widget>[
             Text(sensercount.toString()),
-            values(),
+          //  values(),
           ],
         ),
       );

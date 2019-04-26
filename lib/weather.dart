@@ -19,23 +19,24 @@ class _WeatherPageState extends State<WeatherPage>{
     // TODO: implement initState
     super.initState();
   }
-  Future <Map> gettingWeatherData() async{
-      String myUrl="http://api.apixu.com/v1/current.json?key=9147f4adf5204f16bc793416191604&q=sfax";
+  Future<Map> gettingWeatherData()async {
+    try {
+      String myUrl = "http://api.apixu.com/v1/current.json?key=9147f4adf5204f16bc793416191604&q=sfax";
       http.Response response = await http.get(myUrl);
       return json.decode(response.body);
+    }catch(e){
+      return null;
+    }
   }
-
-
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream:gettingWeatherData().asStream(),
+    return FutureBuilder(
+        future:gettingWeatherData(),
         builder: (BuildContext context, snapshot) {
            imageUrl="http:";
-          if(!snapshot.hasData){
+          if(snapshot.data==null){
               temp="no internet connexion!";
               fontsize=12.0;
-              print("heyy");
               connectivity=false;
           }
           else{
