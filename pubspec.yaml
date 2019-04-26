@@ -22,6 +22,7 @@ dependencies:
   open_weather_api: ^1.5.5
   flutter_sparkline: ^0.1.0
   font_awesome_flutter: ^8.4.0
+  http: ^0.12.0+2
 
 
 

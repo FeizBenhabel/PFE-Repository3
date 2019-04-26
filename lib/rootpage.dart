@@ -3,7 +3,7 @@ import 'Dashboard.dart';
 import 'loginpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'loadingPage.dart';
-
+import 'Menu.dart';
 class RootPage extends StatefulWidget {
   @override
   _RootPageState createState() => _RootPageState();
@@ -22,7 +22,7 @@ void loggedIn(){
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (BuildContext context, snapshot) {
              if(snapshot.hasData)
-               return new Dashboard();
+               return new Menu();
              else
                switch(snapshot.connectionState){
                  case ConnectionState.waiting:return LoadingPage();

@@ -16,21 +16,22 @@ class _ChartState extends State<Chart> {
     for (int i = 0; i < count; i++) {
       result.add(random.nextDouble() * 100);
     }
-
     return result;
   }
 
+
+
   Widget build(BuildContext context) {
     return new Card(
-     color: Color(0xff595377),
-      elevation: 0.1,
+     color:Colors.green,
+      elevation: 2.1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(23.0),
       ),
     child: ListView(
       children: <Widget>[
         SizedBox(
-          height: 20.0,
+          height  : 20.0,
         ),
         Center(
           child:Text("Humidité Stats",style: TextStyle(fontSize:20.0,color: Colors.white),),

@@ -3,34 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/animation.dart';
 class SensorCount extends StatefulWidget {
-  final IconData iconData;
-  const SensorCount(this.iconData);
   @override
   _SensorCountState createState() => _SensorCountState();
 }
 
-class _SensorCountState extends State<SensorCount> with SingleTickerProviderStateMixin  {
-  String sennumber="";
+class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin  {
+  String sennumber="aa";
   bool visible=false;
   int sensorsdowncount;
   double opacity=1.0;
   AnimationController animationController;
   Animation animation;
-  Duration duration=Duration(seconds: 1);
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-        debugPrint(opacity.toString());
-        animationController = AnimationController(
-            duration: Duration(milliseconds: 2000), vsync: this);
-
-    });
-
+  _SensorCountState() {
+    if(sensorsdowncount!=0){
+      animationfunc();
+    }
   }
-
-  @override
+  void animationfunc(){
+    animationController = AnimationController(
+        duration: Duration(milliseconds: 3000), vsync: this);
+    animation=ColorTween(
+        begin:Colors.redAccent,
+        end: Colors.green,
+    ).animate(animationController)..addListener((){
+      setState(() {
+        if(animationController.isCompleted){
+          animationController.reverse();
+          animationfunc();
+        }
+      });
+    });
+    animationController.forward();
+  }
+    @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").snapshots(),
@@ -48,11 +53,10 @@ class _SensorCountState extends State<SensorCount> with SingleTickerProviderStat
               }else{
                   visible=false;
               }
-           //   opacity=opacity==0.0?1.0:0.0;
-            //  duration=Duration(seconds: 1);
               return new Card(
-                  color: Color(0xff595377),
-                elevation: 0.1,
+                  color:Colors.green,
+
+                elevation: 2.1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(23.0),
                 ),
@@ -72,7 +76,7 @@ class _SensorCountState extends State<SensorCount> with SingleTickerProviderStat
                             shrinkWrap: true,
                             children: <Widget>[
                               Center(
-                                child:Icon(FontAwesomeIcons.cogs,color: Colors.white,size: 25.0,)
+                                child:Icon(FontAwesomeIcons.heartbeat,color: Colors.white,size: 25.0,)
                               ),
                               SizedBox(
                                 height: 10.0,
@@ -90,17 +94,15 @@ class _SensorCountState extends State<SensorCount> with SingleTickerProviderStat
                                       visible:visible,
                                         child: Stack(
                                         children: <Widget>[
-                                          AnimatedOpacity(
-                                            duration: duration,
-                                            opacity:opacity,
+                                          Container(
                                               child:Padding(
                                               padding: EdgeInsets.only(left:0),
-                                              child:Text(sensorsdowncount.toString(),style: TextStyle(fontSize:30.0,color:Colors.red,fontWeight: FontWeight.bold,),),
+                                              child:Text(sensorsdowncount.toString(),style: TextStyle(fontSize:30.0,color:animation.value,fontWeight: FontWeight.bold,),),
                                               ),
                                               ),
                                           Padding(
                                             padding: EdgeInsets.only(left:20,top:2.0),
-                                          child:Icon(Icons.perm_scan_wifi,size: 28.0,color: Colors.red,)
+                                          child:Icon(Icons.signal_wifi_off,size: 28.0,color: animation.value,)
                                           ),
 
                                             ],
