@@ -12,7 +12,9 @@ class _LoadingPageState extends State<LoadingPage> {
       child: Container(
         padding:EdgeInsets.only(left: 10.0,right: 10.0),
         child:CircularProgressIndicator(
+                  value: 0.9,
                   backgroundColor: Colors.lightGreen,
+
 
         ),
       ),

@@ -12,12 +12,15 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage>{
   String temp;
   double fontsize;
-  String imageUrl="http://";
+  String imageUrl="";
   bool connectivity=true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(() {
+      gettingWeatherData();
+    });
   }
   Future<Map> gettingWeatherData()async {
     try {
@@ -28,23 +31,26 @@ class _WeatherPageState extends State<WeatherPage>{
       return null;
     }
   }
+
   @override
+
   Widget build(BuildContext context) {
     return FutureBuilder(
         future:gettingWeatherData(),
         builder: (BuildContext context, snapshot) {
-           imageUrl="http:";
           if(snapshot.data==null){
               temp="no internet connexion!";
               fontsize=12.0;
               connectivity=false;
           }
-          else{
+          else {
               temp=snapshot.data['current']['temp_c'].toString()+"°";
               fontsize=30.0;
-              imageUrl=imageUrl+snapshot.data['current']['condition']['icon'].toString();
+              imageUrl="http:"+snapshot.data['current']['condition']['icon'].toString();
               connectivity=true;
+
           }
+          print(imageUrl);
           return new Card(
             color:Colors.green,
             elevation:2.1,
@@ -54,17 +60,21 @@ class _WeatherPageState extends State<WeatherPage>{
             child: ListView(
               children: <Widget>[
                 new Center(
-                  child: Image.network(imageUrl),
+                  child: imageUrl==""?null:Image.network(imageUrl),
                 ),
                 Center(
                   child: Text(temp,style: TextStyle(color: Colors.white,fontSize: fontsize,fontWeight:FontWeight.bold),),
                 ),
+
               ],
             ),
           );
-  }
+        
+        }
+        
     );
 }
 
 
 }
+

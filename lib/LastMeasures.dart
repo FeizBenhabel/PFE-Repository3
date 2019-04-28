@@ -46,11 +46,17 @@ int sensercount=0;
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(23.0),
         ),
-        child: ListView(
-          children: <Widget>[
-            Text(sensercount.toString()),
+        child: ListView.builder(
+          itemCount: sensercount==null?0:sensercount,
+          itemBuilder:(BuildContext context,int index){
+            return ListTile(
+                title: Text(snapshot.data.documents[index].data['valeur']),
+            );
+
+        }
+
           //  values(),
-          ],
+
         ),
       );
     }
