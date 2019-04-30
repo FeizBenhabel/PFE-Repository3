@@ -14,8 +14,6 @@ class _LoadingPageState extends State<LoadingPage> {
         child:CircularProgressIndicator(
                   value: 0.9,
                   backgroundColor: Colors.lightGreen,
-
-
         ),
       ),
         ),

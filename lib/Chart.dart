@@ -20,7 +20,7 @@ Widget sparkline(){
 
   Widget build(BuildContext context) {
     return StreamBuilder(
-    stream:Firestore.instance.collection("Mesures").orderBy('created_At',).snapshots(),
+    stream:Firestore.instance.collection("Mesures").orderBy('created_At',).limit(10).snapshots(),
     builder: (BuildContext context, snapshot) {
       if(!snapshot.hasData){
         return Container(

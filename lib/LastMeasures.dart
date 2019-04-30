@@ -8,6 +8,9 @@ class LastMeasures extends StatefulWidget {
 class _LastMeasuresState extends State<LastMeasures> {
 
 int sensercount=0;
+int indice=0;
+int indice2=0;
+String capteur_id="";
 @override
       void initState() {
             // TODO: implement initState
@@ -15,6 +18,7 @@ int sensercount=0;
            Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").where('status',isEqualTo:1).getDocuments().then((onValue){
              setState(() {
                     sensercount=onValue.documents.length;
+                   // print(sensercount.toString());
              });
            });
     }
@@ -25,42 +29,47 @@ int sensercount=0;
        });
      });
               }
-     Widget values(){
-      for (int i=0;i<sensercount;i++){
-           ListView(
-            children: <Widget>[
-              Text(gettingLastValue(i)),
-            ],
-          );
-      }
-     }
-
+     
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream:Firestore.instance.collection("Mesures").orderBy('created_At',).snapshots(),
+      //stream to get measures!!!
+      stream:Firestore.instance.collection("Mesures").orderBy('created_At',descending: true).limit(2).snapshots(),
       builder: (BuildContext context, snapshot) {
-      return new Card(
-        color:Colors.green,
-        elevation: 2.1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(23.0),
-        ),
-        child: ListView.builder(
-          itemCount: sensercount==null?0:sensercount,
-          itemBuilder:(BuildContext context,int index){
-            return ListTile(
-                title: Text(snapshot.data.documents[index].data['valeur']),
-            );
-
-        }
-
-          //  values(),
-
-        ),
-      );
+        return new Card(
+          color: Colors.green,
+          elevation: 2.1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(23.0),
+          ),
+          child: ListView.builder(
+              itemCount: 2,
+              //sensercount == null ? 0 : sensercount,
+              itemBuilder: (BuildContext context, int index) {
+                print("indexis:" + index.toString());
+                capteur_id = snapshot.data.documents[index].data['id_capteur'].toString();
+                return StreamBuilder(
+                  //stream to get zone_id
+                    stream: Firestore.instance.collection("Users").document(
+                        "7iJJ5VpV9A2gtUOgcEub").collection("capteurs").where('id_capteur', isEqualTo: capteur_id).snapshots(),
+                    builder: (BuildContext context, zonesnapshot) {
+                      if (zonesnapshot.hasData)
+                        print(zonesnapshot.data.documents[0].data['zone']);
+                      return ListTile(
+                        title: Text(snapshot.data.documents[0].data['valeur']),      // subtitle: Text(),
+                      );
+                    }
+                );
+              }
+          ),
+        );
+      }
+          );
+      }
     }
-    );
-}
 
-}
+
+
+
+
+

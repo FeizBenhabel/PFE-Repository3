@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.green,
+        fontFamily: 'RobotoMono',
       ),
         routes : <String, WidgetBuilder>{
           "LoginPage": (context) => LoginPage(),
