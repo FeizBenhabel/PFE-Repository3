@@ -6,7 +6,6 @@ import 'loginpage.dart';
 import 'Dashboard.dart';
 import 'rootpage.dart';
 import 'resetPassword.dart';
-import 'Profile.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -24,8 +23,6 @@ class MyApp extends StatelessWidget {
           "Dashboard": (context) => Dashboard(),
           "RootPage":(context)=>RootPage(),
           "ResetPassword":(context)=>ResetPassword(),
-          "Profile":(context)=>Profile(),
-
         },
       home: RootPage(),
     );

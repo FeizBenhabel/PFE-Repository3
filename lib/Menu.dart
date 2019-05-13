@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Dashboard.dart';
 import 'authentication.dart';
-import 'Profile.dart';
 import 'dart:io';
 import 'loadingPage.dart';
 import 'package:connectivity/connectivity.dart';
-
+import 'SetDisplayName.dart';
+import 'AboutUs.dart';
+import 'ContactUs.dart';
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
@@ -86,21 +87,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                             body = Dashboard();
                           });
                         }),
-                    Divider(
-                      color: Colors.black,
-                      height: 1.6,
-                      indent: 12.0,
-                    ),
-                    ListTile(
-                      title: Text("Profile"),
-                      trailing: Icon(FontAwesomeIcons.userCircle),
-                      onTap: () {
-                        setState(() {
-                          Navigator.of(context).pop();
-                          body = Profile();
-                        });
-                      },
-                    ),
+
                     Divider(
                       color: Colors.black,
                       height: 1.6,
@@ -118,6 +105,11 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                     ListTile(
                       title: Text("About us"),
                       trailing: Icon(FontAwesomeIcons.questionCircle),
+                      onTap:() { setState(() {
+                                       Navigator.of(context).pop();
+                                       body=AboutUs();
+                                        });
+                          },
                     ),
                     Divider(
                       color: Colors.black,
@@ -127,12 +119,28 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                     ListTile(
                       title: Text("Contact us"),
                       trailing: Icon(FontAwesomeIcons.envelope),
+                      onTap: () {
+                        setState(() {
+                          Navigator.of(context).pop();
+                          body = ContactUs();
+                        });
+                      },
                     ),
                     Divider(
                       color: Colors.black,
-                      height: 1.6,
+                      height: 29.0,
                       indent: 12.0,
                     ),
+                   ListTile(
+                     title: Text("Deconnexion"),
+                     trailing: Icon(FontAwesomeIcons.signOutAlt ),
+                     onTap:() { setState(() {
+                            Navigator.of(context).pop();
+                             auth.logout();
+
+                              });
+                    },
+                   )
                   ],
                 ),
               ),

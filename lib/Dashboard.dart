@@ -20,8 +20,8 @@ class  Hompagepage_State extends State<Dashboard> {
     List<Widget> _tiles = <Widget>[
        Chart(),
       // LastMeasures(),
-      SensorCount(),
-      WeatherPage(),
+    //  SensorCount(),
+     // WeatherPage(),
     ];
     @override
     Widget build(BuildContext context) {

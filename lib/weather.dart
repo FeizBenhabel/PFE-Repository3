@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:open_weather_api/open_weather_api.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
