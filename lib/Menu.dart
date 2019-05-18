@@ -8,6 +8,7 @@ import 'package:connectivity/connectivity.dart';
 import 'SetDisplayName.dart';
 import 'AboutUs.dart';
 import 'ContactUs.dart';
+import 'package:flutter_agriculture_app/SensorMap.dart';
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
@@ -107,7 +108,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       trailing: Icon(FontAwesomeIcons.questionCircle),
                       onTap:() { setState(() {
                                        Navigator.of(context).pop();
-                                       body=AboutUs();
+                                       body=SensorMap();
                                         });
                           },
                     ),

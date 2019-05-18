@@ -16,9 +16,11 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:name="io.flutter.app.FlutterApplication"
+                android:name="io.flutter.app.FlutterApplication"
         android:label="flutter_agriculture_app"
         android:icon="@mipmap/leaf">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBBsLLlysbC6O3NY4JBdZCUMbGOLI2_IFo"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -30,6 +32,7 @@
                  until Flutter renders its first frame. It can be removed if
                  there is no splash screen (such as the default splash screen
                  defined in @style/LaunchTheme). -->
+
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
