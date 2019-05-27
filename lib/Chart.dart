@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+
 class Chart extends StatefulWidget {
   const Chart();
   @override

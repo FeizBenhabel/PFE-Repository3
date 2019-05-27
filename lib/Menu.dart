@@ -10,6 +10,9 @@ import 'AboutUs.dart';
 import 'ContactUs.dart';
 import 'package:flutter_agriculture_app/SensorMap.dart';
 class Menu extends StatefulWidget {
+  Widget body;
+  Menu(this.body);
+
   @override
   _MenuState createState() => _MenuState();
 }
@@ -17,7 +20,6 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
   String email = " ", displayName = " ";
   Authentication auth = new Authentication();
-  Widget body = Dashboard();
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +33,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
       });
     });
   }
+
 
   Future<bool> internetConnectivity() async {
     try {
@@ -62,7 +65,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
              else {
             return new Scaffold(
               appBar: AppBar(),
-              body: body,
+              body: widget.body,
               drawer: Drawer(
                 child: ListView(
                   padding: new EdgeInsets.all(0.0),
@@ -85,7 +88,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                         onTap: () {
                           setState(() {
                             Navigator.of(context).pop();
-                            body = Dashboard();
+                            widget.body = Dashboard();
                           });
                         }),
 
@@ -108,7 +111,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       trailing: Icon(FontAwesomeIcons.questionCircle),
                       onTap:() { setState(() {
                                        Navigator.of(context).pop();
-                                       body=SensorMap();
+                                       widget.body=SensorMap();
                                         });
                           },
                     ),
@@ -123,7 +126,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       onTap: () {
                         setState(() {
                           Navigator.of(context).pop();
-                          body = ContactUs();
+                          widget.body = ContactUs();
                         });
                       },
                     ),
@@ -154,4 +157,6 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
               });
         });
   }
+
+
 }

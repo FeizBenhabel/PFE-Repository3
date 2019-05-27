@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter_agriculture_app/Menu.dart';
+import 'package:flutter_agriculture_app/SensorMap.dart';
 class SensorCount extends StatefulWidget {
   @override
   _SensorCountState createState() => _SensorCountState();
@@ -62,6 +64,10 @@ class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin
                 ),
                 child: new InkWell(
                     onTap: () {
+                           setState(() {
+                             Navigator.push(context, MaterialPageRoute(
+                                 builder: (context) => Menu(SensorMap())),);
+                           });
                     },
                     highlightColor: Colors.white,
                     child: new ListView(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'Chart.dart';
-import 'LastMeasures.dart';
+import 'NewChart.dart';
 import 'weather.dart';
 import 'sensorcount.dart';
 class Dashboard extends StatefulWidget {
@@ -12,16 +11,14 @@ class  Hompagepage_State extends State<Dashboard> {
   @override
     List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
       const StaggeredTile.count(6, 3),
-      const StaggeredTile.count(2, 3),
       const StaggeredTile.count(2, 1.5),
       const StaggeredTile.count(2, 1.5),
     ];
 
     List<Widget> _tiles = <Widget>[
-       Chart(),
-      // LastMeasures(),
-    //  SensorCount(),
-     // WeatherPage(),
+      CustomMeasureTickCount(null),
+        SensorCount(),
+        WeatherPage(),
     ];
     @override
     Widget build(BuildContext context) {
@@ -40,7 +37,6 @@ class  Hompagepage_State extends State<Dashboard> {
       )
       ),
       );
-
     }
   }
 
