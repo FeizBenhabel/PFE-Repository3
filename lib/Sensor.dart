@@ -1,13 +1,13 @@
 class Sensor {
 
 int _status;
-int _value;
+String _value;
 String _id;
 double _lat;
 double _lng;
 
 
-int get value => _value;
+String get value => _value;
 
 double get lat => _lat;
 
@@ -21,7 +21,7 @@ set lng(double value) {
   _lng = value;
 }
 
-set value(int value) {
+set value(String value) {
   _value = value;
 
 }

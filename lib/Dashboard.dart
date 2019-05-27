@@ -16,9 +16,9 @@ class  Hompagepage_State extends State<Dashboard> {
     ];
 
     List<Widget> _tiles = <Widget>[
-      CustomMeasureTickCount(null),
-        SensorCount(),
-        WeatherPage(),
+      //9CustomMeasureTickCount(null),
+    //  SensorCount(),
+       //WeatherPage(),
     ];
     @override
     Widget build(BuildContext context) {
