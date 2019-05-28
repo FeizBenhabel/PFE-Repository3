@@ -12,7 +12,7 @@ class _ContactUsState extends State<ContactUs> {
   static String password = "dvbkbbvdlagqeahq";
   final smtpServer = gmail(username, password);
   final auth=new Authentication();
-  TextEditingController message_controller;
+  TextEditingController message_controller=new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,27 +21,12 @@ class _ContactUsState extends State<ContactUs> {
           height: 15.0,
         ),
         Center(
-          child: Text("Contact Us"),
+          child: Text("Contactez-Nous"),
         ),
 
         SizedBox(
           height: 15.0,
                ),
-
-      Padding(
-        padding: EdgeInsets.only(left: 15.0,right: 15.0),
-        child:TextField(
-          autocorrect:false,
-          keyboardType: TextInputType.emailAddress,
-          decoration:InputDecoration(
-                hintText: "Adresse e-mail",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                   ),
-          ),
-        ) ,
-          SizedBox(
-            height: 25.0,
-          ),
             Padding(
               padding: EdgeInsets.only(left: 15.0,right: 15.0),
                 child:TextField(
@@ -60,7 +45,7 @@ class _ContactUsState extends State<ContactUs> {
               Center(
                 child: RaisedButton(onPressed:(){
                   sending();
-                }, child: Text("Send")),
+                }, child: Text("Envoyer")),
               )
             ],
 
@@ -68,17 +53,14 @@ class _ContactUsState extends State<ContactUs> {
     );
   }
   Future sending()async{
-    print(message_controller.text.toString());
-    var user=auth.getUser();
+    var user=await auth.getUser();
     final message = new Message()
-      ..from = new Address(username,"test")
+      ..from = new Address(user.email,user.email)
       ..recipients.add('benhabelfeiz@gmail.com')
       ..subject = 'Smart Agriculture App ${new DateTime.now()}'
       ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-      ..html = "<h1>Smart Agricultuer</h1>\n<p>"+message_controller.text.toString()+"</p>";
+      ..html = "<h1>Smart Agriculture</h1>\n<p>"+message_controller.text.toString()+"</p>";
      final sendReports = await send(message, smtpServer);
-     print("done");
-
 
   }
 }

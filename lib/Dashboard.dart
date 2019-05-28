@@ -10,15 +10,15 @@ class Dashboard extends StatefulWidget {
 class  Hompagepage_State extends State<Dashboard> {
   @override
     List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
-      const StaggeredTile.count(6, 3),
+      //const StaggeredTile.count(6, 3),
       const StaggeredTile.count(2, 1.5),
       const StaggeredTile.count(2, 1.5),
     ];
 
     List<Widget> _tiles = <Widget>[
       //9CustomMeasureTickCount(null),
-    //  SensorCount(),
-       //WeatherPage(),
+       SensorCount(),
+       WeatherPage(),
     ];
     @override
     Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class  Hompagepage_State extends State<Dashboard> {
          color: Colors.transparent,
          padding: const EdgeInsets.only(top: 12.0),
       child: new StaggeredGridView.count(
-      crossAxisCount: 4,
+      crossAxisCount: 3,
       staggeredTiles: _staggeredTiles,
       children: _tiles,
       mainAxisSpacing: 7.0,

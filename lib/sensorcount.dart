@@ -10,7 +10,7 @@ class SensorCount extends StatefulWidget {
 }
 
 class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin  {
-  String sennumber="aa";
+  String sennumber="Waiting For Data..";
   bool visible=false;
   int sensorsdowncount;
   double opacity=1.0;
@@ -22,11 +22,11 @@ class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin
     }
   }
   void animationfunc(){
-    animationController = AnimationController(
+    animationController = new AnimationController(
         duration: Duration(milliseconds: 3000), vsync: this);
     animation=ColorTween(
-        begin:Colors.redAccent,
-        end: Colors.green,
+      begin:Colors.redAccent,
+      end: Colors.green,
     ).animate(animationController)..addListener((){
       setState(() {
         if(animationController.isCompleted){
@@ -37,102 +37,108 @@ class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin
     });
     animationController.forward();
   }
-    @override
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animationController.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").snapshots(),
-    builder: (BuildContext context, snapshot) {
+        stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").snapshots(),
+        builder: (BuildContext context, snapshot) {
           if(snapshot.hasData){
             sennumber = snapshot.data.documents.length.toString();
 
           }
           return new StreamBuilder(
-            stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").where('status',isEqualTo:0).snapshots(),
-            builder: (BuildContext context, snapshot) {
-              if(snapshot.hasData&&snapshot.data.documents.length!=0){
-                sensorsdowncount=snapshot.data.documents.length;
-                visible=true;
-              }else{
+              stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").where('status',isEqualTo:0).snapshots(),
+              builder: (BuildContext context, snapshot) {
+                if(snapshot.hasData&&snapshot.data.documents.length!=0){
+                  sensorsdowncount=snapshot.data.documents.length;
+                  visible=true;
+                }else{
                   visible=false;
-              }
-              return new Card(
+                }
+                return new Card(
                   color:Colors.green,
 
-                elevation: 2.1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(23.0),
-                ),
-                child: new InkWell(
-                    onTap: () {
-                           setState(() {
-                             Navigator.push(context, MaterialPageRoute(
-                                 builder: (context) => Menu(SensorMap())),);
-                           });
-                    },
-                    highlightColor: Colors.white,
-                    child: new ListView(
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 10.0,
-                          height: 10.0,
-                        ),
-                        Center(
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              Center(
-                                child:Icon(FontAwesomeIcons.heartbeat,color: Colors.white,size: 25.0,)
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                                width: 10.0,
-                              ),
-                              Center(
-                                child: Text(sennumber,style: TextStyle(fontSize:30.0,fontWeight:FontWeight.bold,color: Colors.white),),
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                                width: 5.0,
-                              ),
-                                Center(
+                  elevation: 2.1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(23.0),
+                  ),
+                  child: new InkWell(
+                      onTap: () {
+                        animationController.dispose();
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Menu(SensorMap())),);
+
+                      },
+                      highlightColor: Colors.white,
+                      child: new ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 10.0,
+                            height: 10.0,
+                          ),
+                          Center(
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  Center(
+                                      child:Icon(FontAwesomeIcons.heartbeat,color: Colors.white,size: 25.0,)
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                    width: 10.0,
+                                  ),
+                                  Center(
+                                    child: Text(sennumber,style: TextStyle(fontSize:30.0,fontWeight:FontWeight.bold,color: Colors.white),),
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                    width: 5.0,
+                                  ),
+                                  Center(
                                     child:Visibility(
                                       visible:visible,
-                                        child: Stack(
+                                      child: Stack(
                                         children: <Widget>[
                                           Container(
-                                              child:Padding(
+                                            child:Padding(
                                               padding: EdgeInsets.only(left:0),
                                               child:Text(sensorsdowncount.toString(),style: TextStyle(fontSize:30.0,color:animation.value,fontWeight: FontWeight.bold,),),
-                                              ),
-                                              ),
+                                            ),
+                                          ),
                                           Padding(
-                                            padding: EdgeInsets.only(left:20,top:2.0),
-                                          child:Icon(Icons.signal_wifi_off,size: 28.0,color: animation.value,)
+                                              padding: EdgeInsets.only(left:20,top:2.0),
+                                              child:Icon(Icons.signal_wifi_off,size: 28.0,color: animation.value,)
                                           ),
 
-                                            ],
-                                      ),
+                                        ],
                                       ),
                                     ),
+                                  ),
 
 
-                            ],
-                          )
+                                ],
+                              )
 
-                        ),
+                          ),
 
-                      ],
-                    )
-                ),
-              );
+                        ],
+                      )
+                  ),
+                );
 
-            }
+              }
 
 
           );
 
-    });
+        });
 
   }
 

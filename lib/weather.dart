@@ -48,14 +48,12 @@ class _WeatherPageState extends State<WeatherPage> {
                   fontsize = 12.0;
                   connectivity = false;
                 } else {
-                  print("connexion !!!!!!!");
                   temp = snapshot.data['current']['temp_c'].toString() + "°";
                   fontsize = 30.0;
                   imageUrl = "http:" +
                       snapshot.data['current']['condition']['icon'].toString();
                   connectivity = true;
                 }
-                print(imageUrl);
                 return new Card(
                   color: Colors.green,
                   elevation: 2.1,

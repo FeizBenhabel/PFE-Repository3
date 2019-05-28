@@ -107,7 +107,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       indent: 12.0,
                     ),
                     ListTile(
-                      title: Text("About us"),
+                      title: Text("à propos"),
                       trailing: Icon(FontAwesomeIcons.questionCircle),
                       onTap:() { setState(() {
                                        Navigator.of(context).pop();
@@ -121,7 +121,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       indent: 12.0,
                     ),
                     ListTile(
-                      title: Text("Contact us"),
+                      title: Text("Contactez-Nous"),
                       trailing: Icon(FontAwesomeIcons.envelope),
                       onTap: () {
                         setState(() {
@@ -136,7 +136,7 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                       indent: 12.0,
                     ),
                    ListTile(
-                     title: Text("Deconnexion"),
+                     title: Text("Déconnexion"),
                      trailing: Icon(FontAwesomeIcons.signOutAlt ),
                      onTap:() { setState(() {
                             Navigator.of(context).pop();
