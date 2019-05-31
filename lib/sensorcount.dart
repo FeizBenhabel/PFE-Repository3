@@ -70,7 +70,7 @@ class _SensorCountState extends State<SensorCount> with TickerProviderStateMixin
                   ),
                   child: new InkWell(
                       onTap: () {
-                        animationController.dispose();
+                        dispose();
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context) => Menu(SensorMap())),);
 

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'authentication.dart';
+import 'alertMessage.dart';
 class ContactUs extends StatefulWidget {
   @override
   _ContactUsState createState() => _ContactUsState();
 }
 
 class _ContactUsState extends State<ContactUs> {
+
   static String username = "benhabelfeiz@gmail.com";
   static String password = "dvbkbbvdlagqeahq";
+  bool progress=false;
   final smtpServer = gmail(username, password);
   final auth=new Authentication();
   TextEditingController message_controller=new TextEditingController();
@@ -44,8 +47,11 @@ class _ContactUsState extends State<ContactUs> {
               ),
               Center(
                 child: RaisedButton(onPressed:(){
-                  sending();
-                }, child: Text("Envoyer")),
+                  setState(() {
+                    sending();
+
+                  });
+                }, child:progress?new CircularProgressIndicator():Text("Envoyer")),
               )
             ],
 
@@ -53,14 +59,25 @@ class _ContactUsState extends State<ContactUs> {
     );
   }
   Future sending()async{
-    var user=await auth.getUser();
-    final message = new Message()
-      ..from = new Address(user.email,user.email)
-      ..recipients.add('benhabelfeiz@gmail.com')
-      ..subject = 'Smart Agriculture App ${new DateTime.now()}'
-      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-      ..html = "<h1>Smart Agriculture</h1>\n<p>"+message_controller.text.toString()+"</p>";
-     final sendReports = await send(message, smtpServer);
+    var alert = new AlertMessage();
+    try {
+      var user = await auth.getUser();
+      final message = new Message()
+        ..from = new Address(user.email, user.email)
+        ..recipients.add('benhabelfeiz@gmail.com')
+        ..subject = 'Smart Agriculture App ${new DateTime.now()}'
+        ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+        ..html = "<h1>Smart Agriculture</h1>\n<p>" +
+            message_controller.text.toString() + "</p>";
+      final sendReports = await send(message, smtpServer);
+      alert.setTitle("Succès");
+      alert.setMessage("message envoyé avec succès");
+      showDialog(context: this.context, child: alert);
+    }catch(e){
+      alert.setTitle("échec");
+      alert.setMessage("message non envoyé !");
+      showDialog(context: this.context, child: alert);
+    }
 
   }
 }
