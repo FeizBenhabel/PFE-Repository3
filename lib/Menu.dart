@@ -9,6 +9,7 @@ import 'SetDisplayName.dart';
 import 'AboutUs.dart';
 import 'ContactUs.dart';
 import 'package:flutter_agriculture_app/SensorMap.dart';
+import 'Command.dart';
 class Menu extends StatefulWidget {
   Widget body;
   Menu(this.body);
@@ -100,6 +101,12 @@ class _MenuState extends State<Menu>  with SingleTickerProviderStateMixin{
                     ListTile(
                       title: Text("Commande"),
                       trailing: Icon(FontAwesomeIcons.bolt),
+                      onTap:() { setState(() {
+                        Navigator.of(context).pop();
+
+                        widget.body=Command(snapshot.data?1:0);
+                      });
+                      },
                     ),
                     Divider(
                       color: Colors.black,
