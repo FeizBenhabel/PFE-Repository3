@@ -43,13 +43,13 @@ Future<void>  addingSensors()async{
         addMarker(sensor);
       }
 }
-Future<String> getvalue (String id_capteur)async {
+Future<int> getvalue (String id_capteur)async {
   var querySnapshot = await Firestore.instance.collection("Mesures").orderBy(
       'created_At', descending: true).getDocuments();
   int i = 0;
   while (i < querySnapshot.documents.length) {
-    if (querySnapshot.documents[i].data['id_capteur'] == id_capteur) {
-      return querySnapshot.documents[0].data['valeur'];
+    if (querySnapshot.documents[i].data['id_capteur'].toString() == id_capteur) {
+      return querySnapshot.documents[i].data['valeur'];
     }
     else
       i++;
@@ -70,11 +70,15 @@ Future<String> getvalue (String id_capteur)async {
         ));
       }
 
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
     stream:Firestore.instance.collection("Users").document("7iJJ5VpV9A2gtUOgcEub").collection("capteurs").snapshots(),
     builder: (BuildContext context, snapshot) {
+      if(snapshot.hasData){
+        print("Data!!!!!!!");
+        markers = {};
         return FutureBuilder(
           future: addingSensors(),
           builder: (BuildContext context, snapshot) {
@@ -91,6 +95,11 @@ Future<String> getvalue (String id_capteur)async {
             );
           },
         );
+      }else
+         return new Container(
+           child: Text("waiting for Data"),
+         );
+
 
     }
     );
