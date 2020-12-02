@@ -1,6 +1,5 @@
 # flutter_agriculture_app
-
-A new Flutter application.
+An application made for my graduation project
 
 ## Getting Started
 
